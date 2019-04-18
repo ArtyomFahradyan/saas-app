@@ -1,0 +1,160 @@
+<div class="p-4">
+  <div class="row">
+    <button type="button" (click)="helpers.goBack()" class="btn text-success bg-transparent border-0"><i class="fa fa-long-arrow-left mr-2"></i>Back to My Teams</button>
+  </div>
+  <div class="row p-4">
+    <h2 class="mb-3 h-medium"><span class="text-success">Admin to Receive Monthy report</span>
+      <i class="fas ml-2 fa-plus-circle pointer text-primary"
+         (click)="showAddAdminModal('report')"></i>
+    </h2>
+    <div class="table-responsive table-wraper">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of admins; let i = index;">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.firstName}}</td>
+          <td>{{item.lastName}}</td>
+          <td>{{item.email}}</td>
+          <td> <i (click)="showDeleteAdminModal(item)" class="fas fa-trash text-danger pointer"></i></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col col-lg-12 text-center mt-4" >
+      <button type="button" (click)="loadMoreAdmins()" class="btn success-gradient btn-submit mr-3">Load More</button>
+    </div>
+  </div>
+  <div class="row p-4">
+    <h2 class="mb-3 h-medium"><span class="text-success">Voting Committee</span>
+      <i class="fas ml-2 fa-plus-circle pointer text-primary"
+         (click)="showAddAdminModal('commit')"></i>
+    </h2>
+    <div class="table-responsive table-wraper">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of admins; let i = index;">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.firstName}}</td>
+          <td>{{item.lastName}}</td>
+          <td>{{item.email}}</td>
+          <td> <i (click)="showDeleteAdminModal(item)" class="fas fa-trash text-danger pointer"></i></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col col-lg-12 text-center mt-4" >
+      <button type="button" (click)="loadMoreAdmins()" class="btn success-gradient btn-submit mr-3">Load More</button>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #addAdminModal="bs-modal" class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModal" aria-hidden="true">
+  <div class="modal-wraper">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title mt-0" id="addAdminModalLabel">Add Admin</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideAddAdminModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addAdminForm" class="form-group" (ngSubmit)="addAdmin()">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="email">First Name</label>
+                <input type="text" id="firstName" formControlName="firstName"
+                       class="form-control"
+                       placeholder="Enter email address"
+                       [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                  <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                  <div *ngIf="f.firstName.errors.minlength">First Name must be at least 6 characters</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName"
+                       formControlName="lastName"
+                       [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+                       class="form-control" placeholder="Enter password" required autofocus>
+                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                  <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                  <div *ngIf="f.lastName.errors.minlength">Last Name must be at least 6 characters</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="text" id="email" formControlName="email"
+                       class="form-control"
+                       placeholder="Enter email address"
+                       [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">Email is required</div>
+                  <div *ngIf="f.email.errors.pattern">Email is not valid</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 text-danger" *ngIf="ifErr || successAdd" [ngClass]="{'text-danger': ifErr, 'text-success': successAdd}">
+              {{errorMessage}}
+            </div>
+            <div class="mt-3 mr-3 float-right">
+              <button type="submit" class="btn btn-success btn-close">Save</button>
+              <button type="button" class="btn btn-secondary btn-close ml-2" (click)="hideAddAdminModal()">Cancel</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #deleteAdminModal="bs-modal" class="modal fade" id="deleteAdminModal" tabindex="-1" aria-labelledby="deleteAdminModal" aria-hidden="true">
+  <div class="modal-wraper">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title mt-0" id="deleteAdminModalLabel">Remove Admin</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideDeleteAdminModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #removeAdminForm="ngForm" class="form-group" (submit)="deleteAdmin()">
+            <div>
+              <div><h6>Are you sure that you want to remove {{admin.firstName + ' ' + admin.lastName}}?</h6></div>
+            </div>
+            <div class="mt-2">
+              <button type="submit" class="btn btn-success btn-close">Yes</button>
+              <button type="button" class="btn btn-secondary btn-close ml-2" (click)="hideDeleteAdminModal()">No</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

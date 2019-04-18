@@ -1,0 +1,109 @@
+<div class="p-4">
+  <div class="row">
+    <button type="button" (click)="helpers.goBack()" class="btn text-success bg-transparent border-0">
+      <i class="fa fa-long-arrow-left mr-2"></i>
+      Back to My Teams
+    </button>
+  </div>
+  <div class="row p-4">
+    <div class="col-lg-12">
+      <h2 class="mb-3 h-medium"><span class="text-success">More Comps</span></h2>
+    </div>
+    <div class="table-responsive col-lg-8">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">My Contract</th>
+          <th scope="col">Average Contract</th>
+          <th scope="col">Difference</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Contract Value</th>
+            <td>{{contract.price}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Users (free)</th>
+            <td>{{contract.freeUsersCount}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Users (paid)</th>
+            <td>{{contract.paidUsersCount}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Time (free)</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Email sends (paid)</th>
+            <td>{{contract.paidEmailsSentCount}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Email sends (free)</th>
+            <td>{{contract.freeEmailsSentCount}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Projects (free)</th>
+            <td>{{contract.freeProjectsCount}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Projects (paid)</th>
+            <td>{{contract.freeProjectsCount}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Support tier (paid)</th>
+            <td>{{contract.paidSupportTier}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Support tier (free)</th>
+            <td>{{contract.freeSupportTier}}</td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Other</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Other (units)</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Domains (paid)</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>Domains (free)</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>On-boarding (paid)</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr><tr>
+            <th>On-boarding (discount)</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
