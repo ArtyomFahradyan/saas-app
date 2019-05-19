@@ -628,40 +628,39 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <h2 class="modal-heading">Enter your password for continue</h2>
+            <h2 class="modal-heading">{{'invite_title' | translate}}</h2>
             <form class="row signUpForm" [formGroup]="newPasswordForm" (ngSubmit)="onSubmit()">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="password">Password</label>
+                  <label for="password">{{'password' | translate}}</label>
                   <input type="password"
                          id="password"
-                         placeholder="New Password"
+                         [placeholder]="helper.i18n('password', 'new_func')"
                          formControlName="password"
                          class="form-control"
                          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                    <div *ngIf="f.password.errors.required">{{helper.i18n('password', 'required_func')}}</div>
+                    <div *ngIf="f.password.errors.minlength">{{helper.i18n('password', 'length_err_func')}}</div>
                   </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="confirmPassword">Confirm Password</label>
-
+                  <label for="confirmPassword">{{'confirmPassword' | translate}}</label>
                   <input type="password"
                          id="confirmPassword"
-                         placeholder="Confirm Password"
+                         [placeholder]="helper.i18n('confirmPassword', 'new_func')"
                          formControlName="confirmPassword"
                          class="form-control"
                          [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"/>
                   <div *ngIf="submitted && (f.password.touched && f.confirmPassword.touched)"
                        class="invalid-feedback">
-                    Passwords aren't matched.
+                    {{'passwords_arnt_match' | translate}}
                   </div>
                   <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-                    <div *ngIf="f.confirmPassword.errors.required">Password is required</div>
-                    <div *ngIf="f.confirmPassword.errors.minlength">Password must be at least 6 characters</div>
+                    <div *ngIf="f.confirmPassword.errors.required">{{helper.i18n('confirmPassword', 'required_func')}}</div>
+                    <div *ngIf="f.confirmPassword.errors.minlength">{{helper.i18n('confirmPassword', 'length_err_func')}}</div>
                   </div>
                 </div>
               </div>
@@ -670,7 +669,7 @@
               </div>
               <div class="col-sm-12 mt-2">
                 <div class="form-group button-group text-center">
-                  <button class="btn btn-primary" type="submit">Continue<span class="arrow-down"></span> </button>
+                  <button class="btn btn-primary" type="submit">{{'continue' | translate}}<span class="arrow-down"></span> </button>
                 </div>
               </div>
             </form>

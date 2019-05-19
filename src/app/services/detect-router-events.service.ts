@@ -14,17 +14,12 @@ export class DetectRouterEventsService {
         this.token = routerArr[1];
         localStorage.setItem('tokenVal', this.token);
         if (event.url.includes('verifyToken')) {
-          this.userService.emailVerification(this.token).subscribe(
-            data => {
-              this.router.navigate(['/login']);
-            });
+          this.userService.emailVerification(this.token).subscribe(data => {});
         } else if (event.url.includes('resetToken')) {
-          this.router.navigate(['/reset-password/confirm']);
         } else if (event.url.includes('invite/confirm')) {
           if (localStorage.getItem('loggedIn')) {
             localStorage.removeItem('loggedIn');
           }
-          this.router.navigate(['/invite/confirm']);
         }
       }
     });

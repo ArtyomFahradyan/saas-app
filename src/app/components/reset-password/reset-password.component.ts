@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user.service';
-import {AlertService} from '../../services/alert.service';
+import {HelpersService} from '../../services/helpers.service';
+import {EMAIL_PATTERN} from '../../constants/patterns';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,15 +16,15 @@ export class ResetPasswordComponent implements OnInit {
   showEmailVer = false;
   submitted = false;
   constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private alertService: AlertService) { }
+              public helper: HelpersService,
+              private userService: UserService) { }
 
   ngOnInit() {
     this.createForm();
   }
   createForm() {
     this.emailForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]]
     });
   }
   get f() { return this.emailForm.controls; }
@@ -38,18 +39,17 @@ export class ResetPasswordComponent implements OnInit {
           this.showEmailVer = true;
           setTimeout(() => {
             this.showEmailVer = false;
-          }, 4000);
-          this.message = `A confirmation email has been sent to you at ${this.f.email.value}. ` +
-            `Please click on the link in that email to activate your account.`;
+          }, 1500);
+          this.message = this.helper.i18n(this.f.email.value, 'reset_pass_message');
           this.emailForm.reset();
           this.submitted = false;
         },
         error => {
-          this.message = error;
+          this.message = error.message;
           this.showErr = true;
           setTimeout(() => {
             this.showErr = false;
-          }, 4000);
+          }, 2500);
         }
       );
   }

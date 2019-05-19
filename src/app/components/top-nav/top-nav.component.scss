@@ -1,3 +1,13 @@
-.navbar-expand > .container, .navbar-expand > .container-fluid {
-  padding: 0;
+.container-fluid-padding {
+  padding-left: 80px !important;
+}
+.name {
+  border-left: 1px solid #edebf0;
+  padding-left: 10px;
+}
+.back {
+  font-size: 28px;
+  padding: 0 52px;
+  font-weight: 400;
+  margin: 0px;
 }

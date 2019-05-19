@@ -1,12 +1,12 @@
 @import "../../../../assets/scss/variables";
 
-h5 {
-  display: inline-block;
-  color: #0aa89e;
-}
-span {
-  font-size: 16px;
-}
+//h5 {
+//  display: inline-block;
+//  color: #0aa89e;
+//}
+//span {
+//  font-size: 16px;
+//}
 .vendors-content {
   word-break: break-all;
 }
@@ -38,7 +38,7 @@ span {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $indigo;
+  background-color: #ccc;
   transition: .4s;
 }
 
@@ -55,7 +55,7 @@ span {
 }
 
 input:checked + .slider {
-  background-color: #ccc;
+  background-color: $indigo;
 }
 
 input:focus + .slider {

@@ -8,7 +8,7 @@
   width: 100%;
   height: 117%;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 2;
   position: absolute;
   left: 0;
   top: -32px;
@@ -19,12 +19,15 @@
 .box {
   flex: none !important;
   position: relative;
-  width: 300px;
+  width: 600px;
   height: 300px;
-  border: 2px dashed #d4cfdb;
+  border: 2px dashed #99caff;
   text-align: center;
   justify-content: center;
   .dropzone {
+    > i {
+      color: #0068d9;
+    }
     left: 0;
     position: absolute;
     background-color: white;
@@ -38,13 +41,13 @@
     height: 20px;
   }
   .overlay-layer{
-    width:300px;
+    width: 100%;
     left: 0;
     height:40px;
     position:absolute;
     margin-top:-42px;
-    background-color:#fff;
-    z-index:1001;
+    background-color: #f4f4fc;
+    z-index: 5;
     font-size:25px;
     line-height:40px;
   }
@@ -53,4 +56,14 @@
   align-items: center;
   justify-content: center;
   display: flex;
+}
+
+@media (max-width: 1000px) {
+  .box {
+    width: 300px;
+  }
+  button {
+    width: 155px;
+    height: 30px;
+  }
 }

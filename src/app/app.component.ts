@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {DetectRouterEventsService} from './services/detect-router-events.service';
 import {NavigationStart, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {ErrorMessage} from './services/errorInterceptorMessage';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +9,24 @@ import {NavigationStart, Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  isLoggedIn: boolean;
-  constructor(private detectRouterEventsService: DetectRouterEventsService,
-              private router: Router) {
-    // clear alert message on route change
-    router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.isLoggedIn = !!localStorage.getItem('loggedIn');
-        console.log(this.isLoggedIn);
+  constructor(private router: Router,
+              public errorMessages: ErrorMessage,
+              private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && event.url.includes('Token')) {
+        if (event.url.includes('verifyToken')) {
+          localStorage.removeItem('loggedIn');
+          localStorage.removeItem('token');
+          localStorage.removeItem('isAccountOwner');
+        }
       }
     });
+  }
+  closePopUp() {
+    const div = document.getElementById('popup');
+    if (div) {
+      div.classList.remove('show-elem');
+    }
   }
 }

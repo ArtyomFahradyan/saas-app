@@ -1,3 +1,46 @@
-a:hover {
+.btn-chart {
+  border-radius: 50%;
+  background-color: #dbdbdb;
+  border: 0;
+  box-shadow: 0px -2px 33px -13px rgba(0, 0, 0, 0.75);
+  width: 33px;
   color: white;
+  height: 33px;
+  &:hover {
+    background-color: #76878e;
+  }
+  &:active {
+    background-color: #76878e;
+    box-shadow: 0 5px #666;
+    transform: translateY(1px);
+  }
+
+}
+.year {
+  margin: 0 10px 20px;
+  font-weight: bold;
+}
+.chart {
+  position: relative;
+  .btn-chart-left {
+    position: absolute;
+    left: 61px;
+    top: calc(50% - 20px);
+  }
+  .btn-chart-right {
+    position: absolute;
+    right: -28px;
+    top: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 1240px) {
+  .btn-chart {
+    width: 25px;
+    font-size: 10px;
+    height: 25px;
+  }
+  .btn-chart-right {
+    right: -15px !important;
+  }
 }

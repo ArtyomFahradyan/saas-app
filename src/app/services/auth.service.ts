@@ -6,4 +6,7 @@ export class AuthService {
   public isLoggedIn(): boolean {
       return (localStorage.getItem('token') && (localStorage.getItem('loggedIn') === 'true'));
   }
+  public isOwner() {
+    return localStorage.getItem('isAccountOwner');
+  }
 }

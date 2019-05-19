@@ -4,7 +4,6 @@ import {User} from '../models/user';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Contract} from '../models/contract';
-import {Admin} from '../models/admin';
 
 @Injectable()
 export class UserService {
@@ -43,8 +42,8 @@ export class UserService {
   logout() {
     return this.http.get(`${environment.apiUrl}/auth/logout/`);
   }
-  getServices(offset, size) {
-    return this.http.get(`${environment.apiUrl}/contracts?offset=${offset}&size=${size}`);
+  getServices(offset, size, searchTerm, platform, dir) {
+    return this.http.get(`${environment.apiUrl}/contracts?offset=${offset}&size=${size}&sort=${platform}&dir=${dir}` + `${searchTerm ? '&q=' + searchTerm : ''}`);
   }
   getTeams(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/teams`);
@@ -62,7 +61,7 @@ export class UserService {
       notifyAdmin
     });
   }
-  getAdmins(offset, size): Observable<Admin[]> {
-    return this.http.get<Admin[]>(`${environment.apiUrl}/users?offset=${offset}&size=${size}`);
+  getAdmins(offset, size, searchTerm, sortBy, dir): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users?offset=${offset}&size=${size}&sort=${sortBy}&dir=${dir}` + `${searchTerm ? '&q=' + searchTerm : ''}`);
   }
 }

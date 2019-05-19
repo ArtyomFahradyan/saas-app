@@ -1,4 +1,62 @@
+@import "~src/assets/scss/variables";
 table {
   width: 100%;
   overflow-x: scroll;
+}
+.table-cont {
+  border: 1px solid #e5e3ea;
+  padding: 50px;
+  table {
+    box-shadow: none;
+  }
+}
+.arrow-active {
+  color: $royal-blue;
+}
+.table-head-mobile {
+  display: none;
+}
+
+@media (max-width: 556px) {
+  .sort-by-label {
+    display: none;
+  }
+  #sort-by {
+    width: 262px;
+  }
+  .filterAria {
+    .search-service {
+      margin-left: 0;
+      margin-top: 10px;
+      width: 262px;
+    }
+  }
+  .table {
+    .stack-table-thead {
+      display: none;
+    }
+    .table-head-mobile {
+      display: block;
+    }
+    .stack-table-tbody {
+      > tr {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        margin-top: 20px;
+        .progress-barAria {
+          display: none;
+        }
+        td {
+          > span {
+            float: left;
+          }
+          > div, .likes {
+            float: right;
+          }
+
+        }
+      }
+    }
+  }
 }

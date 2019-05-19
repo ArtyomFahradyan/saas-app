@@ -1,12 +1,8 @@
-<div class="content">
-  <top-nav class="navbar navbar-expand navbar-dark bg-white static-top"></top-nav>
-  <!--<app-top-navbar *ngIf="isLoggedIn"></app-top-navbar>-->
-  <div id="wrapper">
-    <left-navbar class="sidebar"></left-navbar>
-    <div id="content-wrapper">
-      <router-outlet></router-outlet>
-    </div>
+<div class="popup-messages" id="popup">
+  <span aria-hidden="true" (click)="closePopUp()" class="btn-close-popup pointer ">&times;</span>
+  <div class="popup-message"
+       *ngFor="let message of errorMessages.messages">
+    {{message}}
   </div>
 </div>
-
-
+<router-outlet></router-outlet>

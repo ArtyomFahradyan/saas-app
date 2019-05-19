@@ -1,83 +1,206 @@
-<div class="p-4">
-  <button type="button" (click)="helpers.goBack()" class="btn text-success bg-transparent border-0"><i class="fa fa-long-arrow-left mr-2"></i>Back to contractList</button>
-
-  <h2 class="mb-3 h-medium blue ml-2">Contract</h2>
-  <div class="mt-4 ml-2 docs-content">
-    <div class="mt-3 contract-content">
-      <div *ngIf="contract.platform"><h5>Platform:&nbsp;</h5><span>{{ contract.platform ? contract.platform.name: '' }}</span></div>
-      <div *ngIf="contract.team"><h5>Team:&nbsp; </h5><span> {{ contract.team ? contract.team.name: '' }}</span></div>
-      <div *ngIf="contract.freeUsersCount"><h5>Users (free):&nbsp; </h5><span> {{ contract.freeUsersCount }}</span></div>
-      <div *ngIf="contract.paidUsersCount"><h5>Users (paid):&nbsp; </h5><span>{{ contract.paidUsersCount }}</span></div>
-      <div *ngIf="contract.paidSupportTier"><h5>Support tier (pied):&nbsp; </h5><span>{{ contract.paidSupportTier }}</span></div>
-      <div *ngIf="contract.freeSupportTier"><h5>Support tier (free):&nbsp; </h5><span>{{ contract.freeSupportTier }}</span></div>
-      <div *ngIf="contract.price"><h5>Price:&nbsp; </h5><span>{{ contract.price }}$</span></div>
-      <div *ngIf="contract.paidEmailsSentCount"><h5>Email Sends (Paid):&nbsp; </h5><span>{{ contract.paidEmailsSentCount }}</span></div>
-      <div *ngIf="contract.freeEmailsSentCount"><h5>Email Sends (Free):&nbsp; </h5><span>{{ contract.freeEmailsSentCount }}</span></div>
-      <div *ngIf="contract.paidProjectsCount"><h5>Projects (paid):&nbsp; </h5><span>{{ contract.paidProjectsCount }}</span></div>
-      <div *ngIf="contract.freeProjectsCount"><h5>Projects (Free):&nbsp; </h5><span>{{ contract.freeProjectsCount }}</span></div>
-      <div *ngIf="contract.trialPeriod"><h5>Trial Period:&nbsp; </h5><span>{{ contract.trialPeriod }}</span></div>
-      <div *ngIf="contract.renewalAt"><h5>Auto Renewal Date:&nbsp; </h5><span>{{ helpers.renewalDate(contract.renewalAt)}}</span></div>
-      <div *ngIf="contract.endedAt"><h5>End Date:&nbsp; </h5><span>{{ helpers.renewalDate(contract.endedAt) }}</span></div>
-      <div *ngIf="contract.startedAt"><h5>Start Date:&nbsp; </h5><span>{{ helpers.renewalDate(contract.startedAt) }}</span></div>
-      <div class="row mt-3">
-        <form #noteForm="ngForm"
-              class="col-lg-5"
-              (ngSubmit)="onSubmit()">
-          <button type="button" (click)="addCustom()" class="btn btn-clear">+Add custom field</button>
-          <div class="row mt-2" *ngFor="let elem of customs; let i = index">
-            <div class="form-group col-lg-5">
-              <input type="text"
-                     id="{{elem}}"
-                     [(ngModel)]="elem[0]"
-                     required
-                     name="key{{i}}"
-                     placeholder="Label name"
-                     class="form-control"/>
-              <div *ngIf="elem[0]" class="invalid-feedback">
-                <div class="text-danger">Label is required</div>
-              </div>
-            </div>
-            <div class="form-group col-lg-5">
-              <input type="text"
-                     id="paidUsersCount"
-                     [(ngModel)]="elem[1]"
-                     required
-                     name="value{{i}}"
-                     placeholder="Value"
-                     class="form-control" />
-              <div *ngIf="elem[1]" class="invalid-feedback">
-                <div class="text-danger">Value is required</div>
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <i class="fa fa-times mt-2 text-danger pointer" (click)="deleteCustomRow(i)"></i>
-            </div>
-          </div>
-          <div class="text-danger" *ngIf="reqFields">
-            Label and Value are required
-          </div>
-          <div class="form-group mt-4">
-            <span>Notify admin</span>
-            <label class="switch d-block">
-              <input type="checkbox" [(ngModel)]="notifyAdmin" name="notifyAdmin">
-              <span class="slider round"></span>
-            </label>
-            <label for="textarea1" class="mt-4">For note</label>
-            <textarea class="form-control" required style="resize: none" [(ngModel)]="note" name="note" id="textarea1" rows="3"></textarea>
-            <div *ngIf="noteForm.submitted && !note" class="text-danger">
-              Note is required
-            </div>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn royal-blue-gradient btn-submit mr-3">Send</button>
-          </div>
-        </form>
+<div class="container-fluid">
+  <div class=" col-sm-12">
+    <div class="contractDetails-table">
+      <div class="subcontractHed">
+        <h2>{{helpers.i18n('contract', 'details_func')}}</h2>
+      </div>
+      <div class="actions-item">
+        <a class="circle-btn btn-primary" *ngIf="contract.attachment"
+           (click)="download(contract.attachment)">
+          <i class="download-icon pointer" tooltip="Download"></i>
+        </a>
+        <a class="circle-btn btn-light">
+          <i (click)="showDeleteModal()" class="delete-icon pointer" tooltip="Delete"></i>
+        </a>
       </div>
     </div>
-    <div class="row text-center ml-1">
-      <div><a href="" class="mr-2">Contract Download</a></div>
-      <div><a href="">Contract Delete</a></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel-details card card-body">
+        <h2 class="panel-details-heading">{{helpers.i18n('main', 'details_func')}}</h2>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td><span class="platform">{{'platform' | translate}}</span></td>
+                <td>{{ contract.platform ? contract.platform.name: 'N/A' }}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{'team' | translate}}</span></td>
+                <td>{{ contract.team ? contract.team.name: 'N/A' }}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{helpers.i18n('start', 'date_func')}}</span></td>
+                <td>{{ contract.startedAt | date: 'MM/dd/yyyy' }}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{helpers.i18n('end', 'date_func')}}</span></td>
+                <td>{{ contract.endedAt ? (contract.endedAt | date: 'MM/dd/yyyy') : 'N/A'}}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{'contract_value' | translate}}</span></td>
+                <td>${{ contract.price | number : '0.0'}}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{helpers.i18n('autoRenewal', 'date_func')}}</span></td>
+                <td>{{ contract.renewalAt | date: 'MM/dd/yyyy' }}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{'paymentFrequency' | translate}}</span></td>
+                <td>{{ contract.paymentFrequency}}</td>
+              </tr>
+              <tr>
+                <td><span class="platform">{{'paymentTerms' | translate}}</span></td>
+                <td>{{ contract.paymentTerms | number : '0.0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <form #noteForm="ngForm"
+            (ngSubmit)="onSubmit()">
+        <div class="panel-details card card-body">
+          <h2 class="panel-details-heading">{{helpers.i18n('additional', 'details_func')}}</h2>
+          <div class="table-responsive">
+            <a class="add-note"> <i (click)="addCustom()" tooltip="Add Custom Field" class="add-icon pointer"></i></a>
+            <table class="table table-striped">
+              <tbody>
+              <tr *ngFor="let elem of customs; let i = index">
+                <td>
+                  <span class="platform">
+                    <input type="text"
+                           id="{{elem}}"
+                           [(ngModel)]="elem[0]"
+                           required
+                           name="key{{i}}"
+                           placeholder="Label name"
+                           class="form-control"/>
+                    <div *ngIf="!elem[0]" class="invalid-feedback">
+                      <div class="text-danger">{{helpers.i18n('label', 'required_func')}}</div>
+                    </div>
+                  </span>
+                </td>
+                <td>
+                  <input type="text"
+                         id="paidUsersCount"
+                         [(ngModel)]="elem[1]"
+                         required
+                         name="value{{i}}"
+                         placeholder="Value"
+                         class="form-control" />
+                  <div *ngIf="!elem[1]" class="invalid-feedback">
+                    <div class="text-danger">{{helpers.i18n('value', 'required_func')}}</div>
+                  </div>
+                </td>
+                <td><i class="fa fa-times mt-3 fa-lg text-danger pointer" (click)="deleteCustomRow(i)"></i></td>
+              </tr>
+              <tr class="text-danger" *ngIf="reqFields">
+                {{helpers.i18n('value', 'required_func')}}
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel-details card card-body ">
+          <h2 class="panel-details-heading">{{'notes' | translate}}</h2>
+          <span>Notify admin</span>
+          <label class="switch d-block mt-2">
+            <input type="checkbox" [(ngModel)]="notifyAdmin" name="notifyAdmin">
+            <span class="slider round"></span>
+          </label>
+          <textarea class="form-control"
+                    #notesArea
+                    [(ngModel)]="note" name="note" id="textarea1"
+                    placeholder="Notes">
+          </textarea>
+          <div *ngIf="noteForm.submitted && !note" class="text-danger">
+            {{helpers.i18n('notes', 'required_func')}}
+          </div>
+          <div class="form-group mt-3">
+            <button type="submit" class="btn-small success-gradient btn-submit mr-3 float-right">{{'save' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class=" col-sm-6">
+      <div class="panel-details card card-body ">
+        <h2 class="panel-details-heading">{{helpers.i18n('other', 'details_func')}}</h2>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('users', 'paid_func')}}</span></td>
+              <td>{{ contract.paidUsersCount ? contract.paidUsersCount : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('users', 'free_func')}}</span></td>
+              <td>{{ contract.freeUsersCount ? contract.freeUsersCount : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('emailSends', 'paid_func')}}</span></td>
+              <td>{{ contract.paidEmailsSentCount ? contract.paidEmailsSentCount : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('emailSends', 'free_func')}}</span></td>
+              <td>{{ contract.freeEmailsSentCount ? contract.freeEmailsSentCount : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('project', 'paid_func')}}</span></td>
+              <td>{{ contract.paidProjectsCount ? contract.paidProjectsCount : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('project', 'free_func')}}</span></td>
+              <td>{{ contract.freeProjectsCount ? contract.freeProjectsCount : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('supportTier', 'paid_func')}}</span></td>
+              <td>{{ contract.paidSupportTier ? contract.paidSupportTier : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td><span class="platform">{{helpers.i18n('supportTier', 'free_func')}}</span></td>
+              <td>{{ contract.paidSupportTier ? contract.paidSupportTier : 'N/A' }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-details card card-body ">
+        <h2 class="panel-details-heading">{{helpers.i18n('attachment', 'add_func')}}</h2>
+        <div class="table-responsive">
+          <app-upload [contractId]="contractId" (voted)="onVoted($event)"></app-upload>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
+<!--deleteModal-->
+<div bsModal #deleteModal="bs-modal" class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-wraper">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title mt-0" id="deleteModalLabel">{{helpers.i18n('contract', 'delete_func')}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideEditModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm" class="form-group" (submit)="deleteContract()">
+            <div><h4>{{'delete_service' | translate}}</h4></div>
+            <div *ngIf="showMessage" class="mt-1" [ngClass]="{'text-success': messageType === 'success', 'text-danger': messageType === 'error'}">
+              {{message}}
+            </div>
+            <div class="mt-2 float-right">
+              <button type="button" class="btn-small btn-secondary btn-close mr-2" (click)="hideEditModal()">{{'no' | translate}}</button>
+              <button type="submit" [disabled]="disabled" class="btn-small btn-primary btn-close">{{'yes' | translate}}
+                <i *ngIf="spinner" class="fas fa-spinner fa-spin"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

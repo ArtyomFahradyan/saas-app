@@ -27,29 +27,17 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
-//              "src/assets/vendor/bootstrap/css/bootstrap.min.css",
-//              "src/assets/vendor/fontawesome-free/css/all.min.css",
-//              "src/assets/vendor/datatables/dataTables.bootstrap4.css",
-//              "src/assets/fancy-file-uploader/fancy_fileupload.css",
-
               "src/assets/scss/_variables.scss"
             ],
             "scripts": [
-//              "./src/assets/fancy-file-uploader/jquery.ui.widget.js",
-//              "./src/assets/fancy-file-uploader/jquery.fileupload.js",
-//              "./src/assets/fancy-file-uploader/jquery.iframe-transport.js",
-//              "./src/assets/fancy-file-uploader/jquery.fancy-fileupload.js",
-//              "./src/assets/vendor/jquery/jquery.min.js",
-//              "./src/assets/vendor/jquery-easing/jquery.easing.min.js",
-//              "./src/assets/vendor/chart.js/Chart.min.js",
-//              "./src/assets/vendor/datatables/jquery.dataTables.js",
-//              "./src/assets/vendor/jquery/jquery.min.js",
-//              "./src/assets/vendor/datatables/dataTables.bootstrap4.js",
-//              "./src/assets/js/sb-admin.min.js",
-//              "./src/assets/js/demo/datatables-demo.js",
-//              "./src/assets/js/demo/chart-area-demo.js"
+              "src/assets/js/chart/Chart.min.js",
+              "node_modules/jquery/dist/jquery.slim.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -104,6 +92,8 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],

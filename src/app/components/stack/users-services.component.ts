@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../services/user.service';
-import * as moment from 'moment';
+import {HelpersService} from '../../services/helpers.service';
 
 @Component({
   selector: 'app-users-services',
@@ -8,26 +8,43 @@ import * as moment from 'moment';
   styleUrls: ['./users-services.component.scss']
 })
 export class UsersServicesComponent implements OnInit {
-  displayedColumns = ['platform', 'contract', 'difference', 'daysUntilRenewal'];
   services = [];
+  searchTerm = '';
+  platform = 'name';
+  dir: 'asc' | 'desc' = 'asc';
+  servicesCount = 0;
   defLimit = {
     offset: 0,
     size: 5
   };
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              public helper: HelpersService) { }
 
   ngOnInit() {
     this.getServices();
   }
-  getServices() {
-    this.userService.getServices(this.defLimit.offset, this.defLimit.size)
+  getServices(change = null) {
+    if (change) {
+      this.defLimit.offset = 0;
+      this.services.length = 0;
+    }
+    this.userService.getServices(this.defLimit.offset, this.defLimit.size, this.searchTerm, this.platform, this.dir)
       .subscribe(data => {
+        this.servicesCount = data['count'];
         this.services = this.services.concat(data['contracts']);
       });
   }
   loadMore() {
     this.defLimit.offset += 5;
     this.getServices();
+  }
+  descOrAsc() {
+    if (this.dir === 'asc') {
+      this.dir = 'desc';
+    } else if (this.dir === 'desc') {
+      this.dir = 'asc';
+    }
+    this.getServices('change');
   }
   avgPrice(platform, usage) {
     let avg;
@@ -43,18 +60,6 @@ export class UsersServicesComponent implements OnInit {
         break;
     }
     return Math.round(avg);
-  }
-  renewalDays(elem) {
-    if (!elem) {
-      return;
-    }
-    if (elem.renewalAt) {
-      const date1 = new Date(moment(elem.renewalAt).format('YYYY-MM-DD')),
-            date2 = new Date(moment(new Date()).format('YYYY-MM-DD')),
-            timeDiff = Math.abs(date2.getTime() - date1.getTime()),
-            diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      return diffDays;
-    }
   }
   difference(platform, usage, price) {
     const avg = this.avgPrice(platform, usage);

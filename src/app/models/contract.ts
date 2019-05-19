@@ -1,5 +1,6 @@
 export interface Contract {
   account: string;
+  attachment: string;
   createdAt: string;
   customField: object;
   endedAt: string;
@@ -9,15 +10,23 @@ export interface Contract {
   freeUsersCount: number;
   isDeleted: boolean;
   notes: string;
+  paymentFrequency: string;
+  paymentTerms: number;
   paidEmailsSentCount: number;
   paidProjectsCount: number;
   paidSupportTier: number;
   paidUsersCount: number;
-  platform: object;
+  platform: {
+    name: string,
+    _id: string,
+  };
   price: number;
   renewalAt: string;
   startedAt: string;
-  team: object;
+  team: {
+    name: string,
+    _id: string,
+  };
   trialPeriod: number;
   updatedAt: string;
   _id: string;

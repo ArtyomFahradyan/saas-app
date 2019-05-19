@@ -14,9 +14,8 @@ html {
 #wrapper {
   display: flex;
   #content-wrapper {
-    overflow-x: hidden;
+    overflow: hidden;
     width: 100%;
-    padding-top: 1rem;
     padding-bottom: $sticky-footer-height;
   }
 }

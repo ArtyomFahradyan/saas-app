@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user.service';
-import {AlertService} from '../../services/alert.service';
 import {ConfirmPasswordValidator} from '../../confirm-password.validator';
-import {Router} from '@angular/router';
+import {ActivationEnd, Router} from '@angular/router';
+import {HelpersService} from '../../services/helpers.service';
 
 @Component({
   selector: 'app-reset-password-confirm',
@@ -18,13 +18,18 @@ export class ResetPasswordConfirmComponent implements OnInit {
   submitted = false;
   resetPasswordForm: FormGroup;
   constructor(private fb: FormBuilder,
+              public helper: HelpersService,
               private userService: UserService,
-              private alertService: AlertService,
-              private router: Router) { }
+              private router: Router) {
+    router.events.subscribe((event) => {
+      if (event instanceof ActivationEnd) {
+        this.token = event.snapshot.queryParams.resetToken;
+      }
+    });
+  }
 
   ngOnInit() {
     this.createForm();
-    this.token = localStorage.getItem('tokenVal');
   }
   createForm() {
     this.resetPasswordForm = this.fb.group({
@@ -45,17 +50,17 @@ export class ResetPasswordConfirmComponent implements OnInit {
           setTimeout(() => {
             this.showEmailVer = false;
             this.router.navigate(['/login']);
-          }, 4000);
-          this.message = 'Your password was reset, you can login to your account.';
+          }, 2500);
+          this.message = this.helper.i18nVal('reset_pass_confirm');
           this.resetPasswordForm.reset();
           this.submitted = false;
         },
         error => {
-          this.message = error;
+          this.message = error.message;
           this.showErr = true;
           setTimeout(() => {
             this.showErr = false;
-          }, 4000);
+          }, 1500);
         }
       );
   }

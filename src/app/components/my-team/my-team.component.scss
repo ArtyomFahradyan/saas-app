@@ -1,0 +1,48 @@
+@import "~src/assets/scss/variables";
+
+.add-team {
+  margin-top: 5px;
+  border: .5px solid #d3e9ff;
+}
+.table {
+  > tbody > tr:first-child {
+    td {
+      border-top: 0 !important;
+    }
+  }
+}
+.btn-add-new {
+  color: white !important;
+}
+.team-item {
+  display: -webkit-inline-box;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  .table-icon-btn {
+    margin-left: 5px;
+    width: 0;
+  }
+  .team-elem {
+    padding-top: 5px;
+    font-weight: bold;
+    width: 85%;
+    &:hover {
+      color: $royal-blue;
+    }
+  }
+}
+
+.team-item:nth-child(2n + 1) {
+  border-bottom: 1px solid $gray-200;
+  border-right: 1px solid $gray-200;
+}
+.team-item:nth-child(2n) {
+  border-bottom: 1px solid $gray-200;
+}
+.last-elem {
+  border-bottom: 0 !important;
+}
+.team-item:last-child {
+  border-bottom: 0 !important;
+}

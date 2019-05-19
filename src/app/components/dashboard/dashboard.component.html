@@ -1,10 +1,128 @@
-<div class="p-4">
-  <h2 class="mb-3 blue h-medium">Welcome to SaaStracked Dashboard</h2>
-  <div class="d-flex justify-content-between align-items-center">
-    <a routerLink="/create-new-service"
-       class="btn success-gradient btn-submit">
-      Create New Service
-      <i class="fa fa-plus-circle mr-2"></i>
-    </a>
+<div class="container-fluid">
+  <div class="row">
+    <div class=" col-sm-8 ">
+      <div class="card">
+        <div class="card-body monthly-card">
+          <div class="card-header bottom-border-hed"> {{'monthly_contract_value' | translate}} </div>
+          <div class="year">
+            {{ fiscalYear == 1 ? year : year + '-' + (year + 1)}}
+          </div>
+          <div class="chart">
+            <button type="button" class="btn-chart-left btn-chart pointer" (click)="changeYear('previous')">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button type="button" class="btn-chart-right btn-chart pointer" (click)="changeYear('next')">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <canvas id="myAreaChart" width="100%" height="30"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card-body card upcoming-table">
+        <div class="card-header">{{'upcoming_renewals' | translate}}</div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">{{'platform' | translate}}</th>
+                <th scope="col">{{'team' | translate}}</th>
+                <th scope="col">{{'contract_value' | translate}}</th>
+                <th scope="col">{{helper.i18n('renewal', 'date_func')}}</th>
+                <th scope="col">{{'daysRemaining' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="renewals.length">
+              <tr *ngFor="let contract of renewals" (click)="goToServicePage(contract)" class="pointer">
+                <td><span class="platform">{{contract.platform.name}}</span></td>
+                <td>{{contract.team.name}}</td>
+                <td>$ {{ contract.price | number : '0.0'}}</td>
+                <td>{{contract.renewalAt | date: 'MM/dd/yyyy'}}</td>
+                <td scope="row">{{helper.renewalDays(contract)}}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="!ifLogdIn">
+              <tr>
+                <td>Optimizely</td>
+                <td>eCommercy</td>
+                <td>$356,250</td>
+                <td>2019/03/21</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>Bounce</td>
+                <td>Systems Administrator</td>
+                <td>$115,500</td>
+                <td>2019/02/27</td>
+                <td>21</td>
+              </tr>
+              <tr>
+                <td>Exchange</td>
+                <td>eCommercy</td>
+                <td>$103,500</td>
+                <td>2019/09/08</td>
+                <td>99</td>
+              </tr>
+              <tr>
+                <td>Shopify</td>
+                <td>BounceX</td>
+                <td>$55,500</td>
+                <td>2019/06/21</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td>Plus</td>
+                <td>Systems Administrator</td>
+                <td>$175,500</td>
+                <td>2019/07/11</td>
+                <td>55</td>
+              </tr>
+              <tr>
+                <td>Bronto</td>
+                <td>Marketing</td>
+                <td>$88,500</td>
+                <td>2019/01/29</td>
+                <td>21</td>
+              </tr>
+              <tr>
+                <td>Mailchimp</td>
+                <td>BounceX</td>
+                <td>$99,500</td>
+                <td>2019/03/20</td>
+                <td>44</td>
+              </tr>
+              <tr>
+                <td>Vimeo</td>
+                <td>Marketing</td>
+                <td>$66,500</td>
+                <td>2019/05/2</td>
+                <td>33</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card widgets-item-card card-body">
+        <div class="widgets-item">
+          <div class="widgets-icon icon-contracts"> </div>
+          <div class="widgets-item-info">
+            <div class="widgets-item-number" *ngIf="ifLogdIn">{{summary.contractsCount ? summary.contractsCount : 0}}</div>
+            <div class="widgets-item-number" *ngIf="!ifLogdIn">15</div>
+            <div class="widgets-item-content">{{'contracts' | translate}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card widgets-item-card card-body">
+        <div class="widgets-item">
+          <div class="widgets-icon annual-spend"> </div>
+          <div class="widgets-item-info">
+            <div class="widgets-item-number" *ngIf="ifLogdIn">$ {{helper.numeral(summary.annualSpend)}}</div>
+            <div class="widgets-item-number" *ngIf="!ifLogdIn">$ 123,000</div>
+            <div class="widgets-item-content">{{'annualSpend' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

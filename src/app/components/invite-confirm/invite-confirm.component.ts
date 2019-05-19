@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ConfirmPasswordValidator} from '../../confirm-password.validator';
 import {HttpRequestsService} from '../../services/http-requests.service';
-import {Router} from '@angular/router';
+import {ActivationEnd, Router} from '@angular/router';
+import {HelpersService} from '../../services/helpers.service';
 
 @Component({
   selector: 'app-invite-confirm',
@@ -18,10 +19,17 @@ export class InviteConfirmComponent implements OnInit {
   newPasswordForm: FormGroup;
   constructor(private fb: FormBuilder,
               private router: Router,
-              private httpService: HttpRequestsService) { }
+              public helper: HelpersService,
+              private httpService: HttpRequestsService) {
+    localStorage.clear();
+    router.events.subscribe((event) => {
+      if (event instanceof ActivationEnd) {
+        this.token = event.snapshot.queryParams.invitationToken;
+      }
+    });
+  }
 
   ngOnInit() {
-    this.token = localStorage.getItem('tokenVal');
     this.createForm();
   }
   createForm() {
@@ -39,23 +47,20 @@ export class InviteConfirmComponent implements OnInit {
           this.submitted = false;
           if (data['success']) {
             this.newPasswordForm.reset();
-            localStorage.removeItem('loggedIn');
-            localStorage.removeItem('token');
-            localStorage.removeItem('tokenVal');
+            localStorage.clear();
             this.successAdd = true;
-            this.errorMessage = 'Successfully verified';
+            this.errorMessage = this.helper.i18n('verified', 'success_func');
             setTimeout(() => {
               this.successAdd = false;
               this.router.navigate(['/login']);
-            }, 4000);
+            }, 1500);
           }
-          console.log(data);
         }, err => {
           this.ifErr = true;
           setTimeout(() => {
             this.ifErr = false;
-          }, 4000);
-          this.errorMessage = err;
+          }, 2500);
+          this.errorMessage = err.message;
         });
     }
   }

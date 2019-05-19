@@ -1,0 +1,16 @@
+<div class="content">
+  <div class="nabar-and-err">
+    <top-nav class="navbar navbar-expand navbar-dark bg-white static-top"></top-nav>
+    <div class="row error-msg" id="errorMessages">{{errorMessage.message}}</div>
+  </div>
+  <div id="wrapper">
+    <left-navbar class="sidebar"></left-navbar>
+    <div id="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <a class="scroll-to-top rounded text-white pointer" (click)="toTop()">
+    <i class="fa fa-angle-up"></i>
+  </a>
+</div>
+
